@@ -28,11 +28,12 @@ class Ship:
     
     def update(self):
         # Uses the movement flag attribute to determine if the ship is moving 
-        #Updating the ship's x value, not the rect
-        if self.moving_right:
+        #Updating the ship's x value, not the rect and making sure the ship doesnt
+        #Go off the bounds of the screen
+        if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x += self.settings.ship_speed        
         # Handles the movement to the left 
-        if self.moving_left:
+        if self.moving_left and self.rect.left > 0:
             self.x -= self.settings.ship_speed
         
         #Updates the rect object based on the self.x object
