@@ -8,15 +8,38 @@ class Ship:
         # Creates a ship and gives it a starting position 
 
         self.screen = ai_game.screen
+        #Settings attribute to be used in update method
+        self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
 
-        # Loads teh ships image and  retreives the rectangle
+        # Loads the ships image and  retreives the rectangle
         self.image = pygame.image.load('images/spaceship.png')
         self.rect = self.image.get_rect()
 
         # Starts a new ship at the bottom of the screens 
         self.rect.midbottom = self.screen_rect.midbottom
 
+        #Stores a decimal number for the ship's horizontal position
+        self.x = float(self.rect.x)
+
+        # Movement flag that determines if the ship is moving
+        self.moving_right = False
+        self.moving_left = False
+    
+    def update(self):
+        # Uses the movement flag attribute to determine if the ship is moving 
+        #Updating the ship's x value, not the rect
+        if self.moving_right:
+            self.x += self.settings.ship_speed        
+        # Handles the movement to the left 
+        if self.moving_left:
+            self.x -= self.settings.ship_speed
+        
+        #Updates the rect object based on the self.x object
+        self.rect.x = self.x 
+
     def blitme(self):
         # Draws the ship at its current location
         self.screen.blit(self.image,self.rect)
+    
+
