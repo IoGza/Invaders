@@ -43,16 +43,19 @@ class AlienInvasion:
             self.ship.update()
             # Separate method used for updating the crseen elements
             self._update_screen()
-            #Updates the bullets as it is being shot
-            self.bullets.update()
-
-            #Getting rid of bullets that have disappeared
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
-            print(len(self.bullets))
+            # Calls update bullets method
+            self._update_bullets()
+            
 
 
+    def _update_bullets(self):
+        """Update position of bullets and get rid of old bullets.""" 
+        # Update bullet positions.
+        self.bullets.update()
+        #Getting rid of bullets that have disappeared
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
 
     def _check_events(self):
         # Keyboard and mouse inputs
