@@ -13,7 +13,7 @@ class Bullet(Sprite):
         self.color = self.settings.bullet_color
 
         #Creates a bullet rect at (0,0) position and sets the curroect position
-        self.rect = pygame.Rect(0,0,self.settigs.bullet_width,
+        self.rect = pygame.Rect(0,0,self.settings.bullet_width,
              self.settings.bullet_height)
         # Allows for the bullet to emerge from the top of the ship by matching the midtops
         self.rect.midtop = ai_game.ship.rect.midtop
