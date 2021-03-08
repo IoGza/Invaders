@@ -206,6 +206,10 @@ class AlienInvasion:
             # Detects if the user has lifted off of the right key
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
+            # Determines if the mouse button was clicked down
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
                 
     def _check_keydown_events(self, event):
         #Method that responds to keydown events
@@ -226,6 +230,11 @@ class AlienInvasion:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
+
+    def _check_play_button(self, mouse_pos):
+        "Start a new game when the player clicks the play button"
+        if self.play_button.rect.collidepoint(mouse_pos):
+            self.stats.game_active = True
 
 
     def _update_screen(self):
