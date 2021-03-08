@@ -3,6 +3,7 @@ import sys
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 
 # Class to manage ALien Invasion window and game assets
@@ -31,6 +32,13 @@ class AlienInvasion:
         #Creating agroup of bullets which will update a bullet passing through the screen
         self.bullets = pygame.sprite.Group()
 
+        # Adds the alien sprite into the sprite group allowing it to be drawn together with the other sprites simultaneously
+        self.aliens = pygame.sprite.Group()
+        
+        self._create_fleet()
+
+
+
     # Main loop for the game
     def run_game(self):
         while True:
@@ -47,6 +55,11 @@ class AlienInvasion:
             self._update_bullets()
             
 
+    def _create_fleet(self):
+        "Creates the fleet of aliens"
+        # Make an alien
+        alien = Alien(self)
+        self.aliens.add(alien)
 
     def _update_bullets(self):
         """Update position of bullets and get rid of old bullets.""" 
@@ -105,6 +118,9 @@ class AlienInvasion:
         # Loops through a list of al; the sprites available in the group
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+
+        # Draws the alien sprite to the screen
+        self.aliens.draw(self.screen)
 
         # Make recently drawn screen visible, erasing the old screen and drawing a new one
         pygame.display.flip()
