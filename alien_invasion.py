@@ -187,6 +187,8 @@ class AlienInvasion:
             #Destroy existing bullets and create a new fleet
             self.bullets.empty()
             self._create_fleet()
+            # Increases the tempo of the game
+            self.settings.increase_speed()
         
     def _fire_bullet(self):
         "Creates a new bullet and adds it to the created bullet group"
@@ -239,6 +241,8 @@ class AlienInvasion:
         # For loop conditions makes it to where the game stats are reset on button push 
         # and removes the button area on game start
         if button_clicked and not self.stats.game_active:
+            # Reset game settings
+            self.settings.initialize_dynamic_settings()
             # Reset game stats
             self.stats.reset_stats()
             self.stats.game_active = True
