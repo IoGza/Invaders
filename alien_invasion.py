@@ -223,6 +223,8 @@ class AlienInvasion:
             # Moves the ship element to the left 
             self.ship.moving_left = True
         #Allows user to exit using the q key
+        elif event.key == pygame.K_p:
+            self._start_game(event.key)
         elif event.key == pygame.K_q:
             sys.exit()
         elif event.key == pygame.K_SPACE:
@@ -233,6 +235,29 @@ class AlienInvasion:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
+
+    def _start_game(self, event):
+        p_key_clicked = True
+
+        if p_key_clicked and not self.stats.game_active:
+            # Reset game settings
+            self.settings.initialize_dynamic_settings()
+            # Reset game stats
+            self.stats.reset_stats()
+            self.stats.game_active = True
+
+            # Get rid of any remaining aliens and bullets
+            self.aliens.empty()
+
+            # Create a new fleet and center the ship
+            self._create_fleet()
+            self.ship.center_ship()
+
+            # Hides the cursoe
+            pygame.mouse.set_visible(False)
+        else:
+            p_key_clicked = False
+
 
     def _check_play_button(self, mouse_pos):
         "Start a new game when the player clicks the play button"
