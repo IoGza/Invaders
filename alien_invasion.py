@@ -13,6 +13,8 @@ from scoreboard import Scoreboard
 # Class to manage ALien Invasion window and game assets
 clock = pygame.time.Clock()
 
+PAUSE = True
+
 
 class AlienInvasion:
     def __init__(self):
@@ -142,10 +144,10 @@ class AlienInvasion:
         "check if at an edge and then update the positions of aliens in the fleet"
         self._check_fleet_edges()
         self.aliens.update()
-        
+
         # Look for alien/ship collisions
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
-            
+
             self._ship_hit()
 
         # Look for aliens hitting bottom of screen
@@ -223,6 +225,7 @@ class AlienInvasion:
 
     def _check_events(self):
         # Keyboard and mouse inputs
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -249,7 +252,11 @@ class AlienInvasion:
             # Moves the ship element to the left
             self.ship.moving_left = True
             pygame.mixer.Sound.play(ship_moving_sound)
-
+        elif event.key == pygame.K_n:
+            self._pause_game(event.key)
+        elif event.key == pygame.K_m:
+            # self._pause_game(event.key)
+            self.stats.game_active = True
         # Allows user to exit using the q key
         elif event.key == pygame.K_p:
             self._start_game(event.key)
@@ -264,10 +271,33 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
-    def _start_game(self, event):
-        p_key_clicked = True
+    def _pause_game(self, event):
+        PAUSE = True
 
-        if p_key_clicked and not self.stats.game_active:
+        while PAUSE:
+            if self.stats.game_active:
+                PAUSE = True
+                self.stats.game_active = False
+            elif not self.stats.game_active:
+
+                # Updates the positioning of the ship
+                self.ship.update()
+                # Calls update bullets method
+                self._update_bullets()
+                # Calls to update alien position
+                self._update_aliens()
+                # Separate method used for updating the crseen elements
+                self._update_screen()
+                
+            
+            PAUSE = False
+
+           
+            
+
+    def _start_game(self, event):
+
+        if not self.stats.game_active:
             # Reset game settings
             self.settings.initialize_dynamic_settings()
             # Reset game stats
@@ -283,8 +313,6 @@ class AlienInvasion:
 
             # Hides the cursoe
             pygame.mouse.set_visible(False)
-        else:
-            p_key_clicked = False
 
     def _check_play_button(self, mouse_pos):
         "Start a new game when the player clicks the play button"
