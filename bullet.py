@@ -2,6 +2,7 @@ import pygame
 #Importing sprites allows you to group multiple elements together and work on them at once
 from pygame.sprite import Sprite
 
+
 class Bullet(Sprite):
     "Class which manages the bullets fired by the ship"
 
@@ -11,6 +12,8 @@ class Bullet(Sprite):
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         self.color = self.settings.bullet_color
+ 
+        
 
         #Creates a bullet rect at (0,0) position and sets the curroect position
         self.rect = pygame.Rect(0,0,self.settings.bullet_width,
@@ -23,13 +26,14 @@ class Bullet(Sprite):
     
     def update(self):
         "Move the bullet up the screen"
-
         #Updates the decimal position of the bullet
         self.y -= self.settings.bullet_speed
 
         #Updates the rect position 
         self.rect.y = self.y
+       
 
     def draw_bullet(self):
         "Draw the bullet to the screen"
+
         pygame.draw.rect(self.screen, self.color, self.rect)
