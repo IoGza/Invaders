@@ -371,7 +371,6 @@ class AlienInvasion:
         # Make recently drawn screen visible, erasing the old screen and drawing a new one
         pygame.display.flip()
 
-print()
 
 if __name__ == "__main__":
     # Makes an instance of the game by calling the alien invasion class
