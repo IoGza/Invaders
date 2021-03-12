@@ -56,8 +56,6 @@ class AlienInvasion:
         # Make the play button
         self.play_button = Button(self, "Play")
 
-        self.pause_button = Button(self, "Paused")
-
     # Main loop for the game
     def run_game(self):
         while True:
@@ -102,10 +100,13 @@ class AlienInvasion:
                 self._create_alien(alien_number, row_number)
 
     def _ship_hit(self):
-        "Rspond to the ship being hit"
+        "Respond to the ship being hit"
+
+        ship_hit_sound = pygame.mixer.Sound("ship_hit.wav")
         # If block makes sure player has at least one ship left, if no ships left
         # Then the game will stop
         if self.stats.ships_left > 0:
+            pygame.mixer.Sound.play(ship_hit_sound)
 
             # Decrement ships_left, and update scoreboard
             self.stats.ships_left -= 1
@@ -122,6 +123,8 @@ class AlienInvasion:
             # Pause the game once ship is hit
             sleep(0.5)
         else:
+            game_over = pygame.mixer.Sound("game_over.wav")
+            pygame.mixer.Sound.play(game_over)
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
@@ -204,6 +207,11 @@ class AlienInvasion:
 
     def _new_level_started(self):
         "Updates the screen to reflect that the played has reached a new level"
+
+        level_up_sound = pygame.mixer.Sound("level_up.wav")
+        level_up_sound.set_volume(0.6)
+        pygame.mixer.Sound.play(level_up_sound)
+
         # Destroy existing bullets and create a new fleet
         self.bullets.empty()
         self._create_fleet()
@@ -312,12 +320,6 @@ class AlienInvasion:
 
             # Hides the cursoe
             pygame.mouse.set_visible(False)
-
-    def _check_pause_button(self, mouse_pos):
-        pause_clicked = self.pause_button.rect.collidepoint(mouse_pos)
-
-        if not self.stats.game_active:
-            self.pause_button.draw_button()
 
     def _check_play_button(self, mouse_pos):
         "Start a new game when the player clicks the play button"
