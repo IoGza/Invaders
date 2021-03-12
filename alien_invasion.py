@@ -16,6 +16,7 @@ PAUSE = True
 
 # Class to manage Alien Invasion window and game assets
 
+
 class AlienInvasion:
     def __init__(self):
 
@@ -26,7 +27,9 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings()
 
-        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+        self.screen = pygame.display.set_mode(
+            (self.settings.screen_width, self.settings.screen_height)
+        )
 
         self.bg = pygame.image.load("images/bg_1.png").convert()
 
@@ -52,6 +55,8 @@ class AlienInvasion:
 
         # Make the play button
         self.play_button = Button(self, "Play")
+
+        self.pause_button = Button(self, "Paused")
 
     # Main loop for the game
     def run_game(self):
@@ -253,7 +258,6 @@ class AlienInvasion:
         elif event.key == pygame.K_n:
             self._pause_game(event.key)
         elif event.key == pygame.K_m:
-            # self._pause_game(event.key)
             self.stats.game_active = True
         # Allows user to exit using the q key
         elif event.key == pygame.K_p:
@@ -276,6 +280,7 @@ class AlienInvasion:
             if self.stats.game_active:
                 PAUSE = True
                 self.stats.game_active = False
+                self.pause_button.draw_button()
             elif not self.stats.game_active:
 
                 # Updates the positioning of the ship
@@ -286,12 +291,8 @@ class AlienInvasion:
                 self._update_aliens()
                 # Separate method used for updating the crseen elements
                 self._update_screen()
-                
-            
-            PAUSE = False
 
-           
-            
+            PAUSE = False
 
     def _start_game(self, event):
 
@@ -311,6 +312,12 @@ class AlienInvasion:
 
             # Hides the cursoe
             pygame.mouse.set_visible(False)
+
+    def _check_pause_button(self, mouse_pos):
+        pause_clicked = self.pause_button.rect.collidepoint(mouse_pos)
+
+        if not self.stats.game_active:
+            self.pause_button.draw_button()
 
     def _check_play_button(self, mouse_pos):
         "Start a new game when the player clicks the play button"
