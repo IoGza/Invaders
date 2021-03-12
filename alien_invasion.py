@@ -102,7 +102,7 @@ class AlienInvasion:
     def _ship_hit(self):
         "Respond to the ship being hit"
 
-        ship_hit_sound = pygame.mixer.Sound("ship_hit.wav")
+        ship_hit_sound = pygame.mixer.Sound("sounds\ship_hit.wav")
         # If block makes sure player has at least one ship left, if no ships left
         # Then the game will stop
         if self.stats.ships_left > 0:
@@ -123,7 +123,7 @@ class AlienInvasion:
             # Pause the game once ship is hit
             sleep(0.5)
         else:
-            game_over = pygame.mixer.Sound("game_over.wav")
+            game_over = pygame.mixer.Sound("sounds\game_over.wav")
             pygame.mixer.Sound.play(game_over)
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
@@ -187,7 +187,7 @@ class AlienInvasion:
 
     def _check_bullet_alien_collisions(self):
         "Respond to bullet and alien collisions"
-        ship_explosion = pygame.mixer.Sound("explosion.wav")
+        ship_explosion = pygame.mixer.Sound("sounds\explosion.wav")
         ship_explosion.set_volume(0.6)
         # Remove any bullets and aliens that have collided
 
@@ -208,7 +208,7 @@ class AlienInvasion:
     def _new_level_started(self):
         "Updates the screen to reflect that the played has reached a new level"
 
-        level_up_sound = pygame.mixer.Sound("level_up.wav")
+        level_up_sound = pygame.mixer.Sound("sounds\level_up.wav")
         level_up_sound.set_volume(0.6)
         pygame.mixer.Sound.play(level_up_sound)
 
@@ -224,7 +224,7 @@ class AlienInvasion:
 
     def _fire_bullet(self):
         "Creates a new bullet and adds it to the created bullet group"
-        bullet_sound = pygame.mixer.Sound("shot.wav")
+        bullet_sound = pygame.mixer.Sound("sounds\shot.wav")
         bullet_sound.set_volume(0.8)
 
         # Loop to check the number of bullets on the screen
@@ -252,7 +252,7 @@ class AlienInvasion:
                 self._check_play_button(mouse_pos)
 
     def _check_keydown_events(self, event):
-        ship_moving_sound = pygame.mixer.Sound("woosh.wav")
+        ship_moving_sound = pygame.mixer.Sound("sounds\woosh.wav")
         ship_moving_sound.set_volume(0.5)
         # Method that responds to keydown events
         if event.key == pygame.K_RIGHT:
