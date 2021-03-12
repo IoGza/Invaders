@@ -288,7 +288,6 @@ class AlienInvasion:
             if self.stats.game_active:
                 PAUSE = True
                 self.stats.game_active = False
-                self.pause_button.draw_button()
             elif not self.stats.game_active:
 
                 # Updates the positioning of the ship
